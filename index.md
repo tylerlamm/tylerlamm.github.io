@@ -2,7 +2,7 @@
 
 ## Demos
 - [Chessboard Demo](Chessboard)
-- [Circles On Screen](circles)
+- [Circles On Screen](Circles On Screen)
 
 ## Projects
 - First assignment will go here
