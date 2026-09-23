@@ -4,6 +4,7 @@
 - [Chessboard Demo](Chessboard)
 - [Circles On Screen](Circles On Screen)
 - [Square Around Edge of Screen](square)
+- [Millis Demo](millis)
 
 ## Projects
 - [Interactive Scene](scene)
