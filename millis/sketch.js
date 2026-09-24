@@ -15,7 +15,7 @@ function draw() {
 
 function swapStateIfNeeded() {
   if (millis() > lastSwapTime + waitTime) {
-    lastSwapTime = millis()
+    lastSwapTime = millis();
     if (state === "red") {
       state = "black";
     }
