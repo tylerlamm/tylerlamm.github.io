@@ -6,16 +6,19 @@
 // - describe what you did to take this project "above and beyond"
 let bg;
 let font;
+let cookieScale = 0.5;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   bg = await loadImage('images/plains.png');
-  font = await loadFont();
+  font = await loadFont('fonts/Pixel Game.otf');
+  cookie = await loadImage('images/cookie.png');
 }
 
 function draw() {
   background(bg);
   mainTitle();
+  spawnCookie();
   //background with title "click the cookie"
   //have cookie spawn somewhere on the screen
   //number of times clicked showing somewhere
@@ -23,8 +26,13 @@ function draw() {
 }
 
 function mainTitle() {
-  textSize(64);
+  textSize(80);
   fill(0);
   textAlign(CENTER, CENTER);
-  text("click the cookie!", windowWidth/2, windowHeight/6);
+  textFont(font);
+  text("click the cookie!", windowWidth/2, windowHeight/8);
 }
+
+function showCookie() {
+  image(cookie, 50, 50, cookie.width * cookieScale, cookie.height * cookieScale);
+} 
