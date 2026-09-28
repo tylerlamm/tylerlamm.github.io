@@ -5,6 +5,7 @@
 - [Circles On Screen](Circles On Screen)
 - [Square Around Edge of Screen](square)
 - [Millis Demo](millis)
+- [Traffic Light](traffic)
 
 ## Projects
 - [Interactive Scene](scene)

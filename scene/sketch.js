@@ -10,7 +10,7 @@ let font;
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   bg = await loadImage('images/plains.png');
-  font = await loadFont()
+  font = await loadFont();
 }
 
 function draw() {
@@ -25,6 +25,6 @@ function draw() {
 function mainTitle() {
   textSize(64);
   fill(0);
-  textAlign(CENTER, CENTER)
+  textAlign(CENTER, CENTER);
   text("click the cookie!", windowWidth/2, windowHeight/6);
 }
