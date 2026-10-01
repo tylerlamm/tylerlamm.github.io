@@ -5,58 +5,97 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let bg;
+let startBackground;
+let playBackground;
 let font;
+let cookie;
 let cookieScale = 0.5;
+let gameState = "notPlaying";
+let score = 0;
+let cookieX;
+let cookieY;
 
-async function setup() {
+function preload() { //waits
+  startBackground = loadImage('images/plains.png');
+  playBackground = loadImage('images/bakery.jpg');
+  font = loadFont('fonts/pixelgame.otf');
+  cookie = loadImage('images/cookie.png');
+}
+
+function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
-  bg = await loadImage('images/plains.png');
-  font = await loadFont('fonts/Pixel Game.otf');
-  cookie = await loadImage('images/cookie.png');
+  cookieX = random(width);
+  cookieY = random(height);
 }
 
 function draw() {
-  background(bg);
-  mainTitle();
-  showCookie();
-  //background with title "click the cookie"
+    if (gameState === "notPlaying") {
+    startScreen();
+  }
+  else if (gameState === "playing") {
+    startGame();
+  }
+  //Start screen with "press to play" If the mouse is pressed inside this
+  //"Press to play," then move get rid of it
+  //background with title "click the cookie" + score count so 0 at first
   //have cookie spawn somewhere on the screen
-  //number of times clicked showing somewhere
-  //if cookie clicked +1 to number
+  //once first cookie is clicked get rid of "click the cookie"
+  //if cookie clicked +1 to score count
+  //press "r" to reset score and go back to press to play screen
+}
+
+function startScreen() {
+  background(startBackground);
+  randomCookieClicker();
+  pressToPlay();
 }
 
 function pressToPlay() {
-  textSize(100);
+  let msg = "Press To Play";
+  let startX = windowWidth/2;
+  let startY = windowHeight/2;
+  textSize(windowWidth/20);
   fill(0);
   textAlign(CENTER, CENTER);
   textFont(font);
-  text("Press To Play", windowWidth/2, windowHeight/2);
+  text(msg, startX, startY);
+  let tWidth = textWidth(msg) + 20;
+  let tHeight = textSize();
+  noFill();
+  strokeWeight(textSize()/10);
+  rect(startX, startY, tWidth, tHeight);
+  if (mouseIsPressed && mouseX > startX - tWidth/2 && mouseX < startX + tWidth/2 && mouseY > startY - tHeight/2 && mouseY < startY + tHeight/2) {
+    gameState = "playing";
+  }
 }
 
 function randomCookieClicker() {
-  textSize(200);
+  textSize(windowWidth/10);
   fill(0);
   textAlign(CENTER, CENTER);
   textFont(font);
   text("RANDOM COOKIE CLICKER", windowWidth/2, windowHeight/4);
 }
 
-function mainTitle() {
-  randomCookieClicker();
-  pressToPlay();
-  let tWidth = textWidth(text);
-  let tHeight = textSize();
-  noFill();
-  strokeWeight(8);
-  rect(windowWidth/2, windowHeight/2, tWidth, tHeight);
-}
-
 function startGame() {
-
+  background(playBackground);
+  scoreCount();
+  spawnCookie();
 }
 
-function showCookie() {
-  image(cookie, windowWidth/2, windowHeight/2, cookie.width * cookieScale, cookie.height * cookieScale);
+function spawnCookie() {
+  image(cookie, cookieX, cookieY, cookie.width * cookieScale, cookie.height * cookieScale);
+}
+
+function scoreCount() {
+  textSize(windowWidth/20);
+  text(score, windowWidth/2, windowHeight/2)
+}
+
+function keyPressed() {
+  if (key === 'r') {
+    gameState = "notPlaying";
+    score = 0
+  }
 }
