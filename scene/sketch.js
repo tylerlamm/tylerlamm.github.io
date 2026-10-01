@@ -9,28 +9,25 @@ let startBackground;
 let playBackground;
 let font;
 let cookie;
-let cookieScale = 0.5;
+let cookieScale = 0.4;
 let gameState = "notPlaying";
-let score = 0;
+let score;
 let cookieX;
 let cookieY;
 
-function preload() { //waits
-  startBackground = loadImage('images/plains.png');
-  playBackground = loadImage('images/bakery.jpg');
-  font = loadFont('fonts/pixelgame.otf');
-  cookie = loadImage('images/cookie.png');
-}
-
-function setup() {
+async function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
-  cookieX = random(width);
-  cookieY = random(height);
+  startBackground = await loadImage('images/plains.png');
+  playBackground = await loadImage('images/bakery.jpg');
+  font = await loadFont('fonts/pixelgame.otf');
+  cookie = await loadImage('images/cookie.png');
+  cookieX = random(windowWidth - cookie.width * cookieScale);
+  cookieY = random(windowHeight - cookie.height * cookieScale);
 }
 
 function draw() {
-    if (gameState === "notPlaying") {
+  if (gameState === "notPlaying") {
     startScreen();
   }
   else if (gameState === "playing") {
@@ -63,7 +60,7 @@ function pressToPlay() {
   let tWidth = textWidth(msg) + 20;
   let tHeight = textSize();
   noFill();
-  strokeWeight(textSize()/10);
+  strokeWeight(tHeight/10);
   rect(startX, startY, tWidth, tHeight);
   if (mouseIsPressed && mouseX > startX - tWidth/2 && mouseX < startX + tWidth/2 && mouseY > startY - tHeight/2 && mouseY < startY + tHeight/2) {
     gameState = "playing";
@@ -89,13 +86,16 @@ function spawnCookie() {
 }
 
 function scoreCount() {
+  score = 0;
   textSize(windowWidth/20);
-  text(score, windowWidth/2, windowHeight/2)
+  stroke(0);
+  fill(115, 100, 50);
+  text("score: " + score, windowWidth/2, windowHeight/10);
 }
 
 function keyPressed() {
   if (key === 'r') {
     gameState = "notPlaying";
-    score = 0
+    score = 0;
   }
 }
