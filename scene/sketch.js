@@ -3,7 +3,7 @@
 // September 22, 2026
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+//all kinds of text editing (stroke, size, align, loading fonts (pixel game)), pushing and popping so that certain settings for text don't apply for other text, 
 
 let startBackground;
 let playBackground;
@@ -11,7 +11,10 @@ let font;
 let cookie;
 let cookieScale = 0.4;
 let gameState = "notPlaying";
-let score;
+let firstClickDone = "not"
+let score = 0;
+let resetSound;
+let clickSound;
 let cookieX;
 let cookieY;
 
@@ -21,6 +24,8 @@ async function setup() {
   startBackground = await loadImage('images/plains.png');
   playBackground = await loadImage('images/bakery.jpg');
   font = await loadFont('fonts/pixelgame.otf');
+  clickSound = await loadSound('sound/boop.mp3')
+  resetSound = await loadSound('sound/menu.mp3')
   cookie = await loadImage('images/cookie.png');
   cookieX = random(windowWidth - cookie.width * cookieScale);
   cookieY = random(windowHeight - cookie.height * cookieScale);
@@ -64,38 +69,66 @@ function pressToPlay() {
   rect(startX, startY, tWidth, tHeight);
   if (mouseIsPressed && mouseX > startX - tWidth/2 && mouseX < startX + tWidth/2 && mouseY > startY - tHeight/2 && mouseY < startY + tHeight/2) {
     gameState = "playing";
+    resetSound.play();
   }
 }
 
 function randomCookieClicker() {
+  push();
   textSize(windowWidth/10);
   fill(0);
   textAlign(CENTER, CENTER);
   textFont(font);
   text("RANDOM COOKIE CLICKER", windowWidth/2, windowHeight/4);
+  pop();
 }
 
 function startGame() {
   background(playBackground);
+  showCookie();
   scoreCount();
-  spawnCookie();
+  clickTheCookie();
 }
 
-function spawnCookie() {
+function showCookie() {
   image(cookie, cookieX, cookieY, cookie.width * cookieScale, cookie.height * cookieScale);
 }
 
 function scoreCount() {
-  score = 0;
+  push();
   textSize(windowWidth/20);
   stroke(0);
-  fill(115, 100, 50);
+  fill(255);
   text("score: " + score, windowWidth/2, windowHeight/10);
+  pop();
+}
+
+function clickTheCookie() {
+  if (firstClickDone === "not"){
+    push();
+    textSize(windowWidth/20);
+    fill(255);
+    stroke(0);
+    text("Click The Cookie!", width/2, width/2);
+    pop();
+  }
 }
 
 function keyPressed() {
   if (key === 'r') {
     gameState = "notPlaying";
     score = 0;
+  }
+}
+
+function mousePressed() {
+  if (gameState === "playing") {
+    if (mouseIsPressed && mouseX > cookieX && mouseX < cookieX + (cookie.width * cookieScale) && mouseY > cookieY && mouseY < cookieY + (cookie.height * cookieScale)){
+    score += 1;
+    firstClickDone = "done"
+    clickSound.play();
+    cookieX = random(windowWidth - cookie.width * cookieScale);
+    cookieY = random(windowHeight - cookie.height * cookieScale);
+  }
   }
 }
