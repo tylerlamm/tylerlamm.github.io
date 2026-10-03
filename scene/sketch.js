@@ -3,7 +3,7 @@
 // September 22, 2026
 //
 // Extra for Experts:
-//all kinds of text editing (stroke, size, align, loading fonts (pixel game)), pushing and popping so that certain settings for text don't apply for other text, 
+//all kinds of text editing (stroke, size, align, loading fonts (pixel game)), pushing and popping so that certain settings for text don't apply for other text, incorporated sounds for press to play button and when the cookie is clicked
 
 let startBackground;
 let playBackground;
