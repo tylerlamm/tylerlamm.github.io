@@ -11,7 +11,7 @@ let font;
 let cookie;
 let cookieScale = 0.4;
 let gameState = "notPlaying";
-let firstClickDone = "not"
+let firstClickDone = "not";
 let score = 0;
 let resetSound;
 let clickSound;
@@ -24,8 +24,8 @@ async function setup() {
   startBackground = await loadImage('images/plains.png');
   playBackground = await loadImage('images/bakery.jpg');
   font = await loadFont('fonts/pixelgame.otf');
-  clickSound = await loadSound('sound/boop.mp3')
-  resetSound = await loadSound('sound/menu.mp3')
+  clickSound = await loadSound('sound/boop.mp3');
+  resetSound = await loadSound('sound/menu.mp3');
   cookie = await loadImage('images/cookie.png');
   cookieX = random(windowWidth - cookie.width * cookieScale);
   cookieY = random(windowHeight - cookie.height * cookieScale);
@@ -123,12 +123,12 @@ function keyPressed() {
 
 function mousePressed() {
   if (gameState === "playing") {
-    if (mouseIsPressed && mouseX > cookieX && mouseX < cookieX + (cookie.width * cookieScale) && mouseY > cookieY && mouseY < cookieY + (cookie.height * cookieScale)){
-    score += 1;
-    firstClickDone = "done"
-    clickSound.play();
-    cookieX = random(windowWidth - cookie.width * cookieScale);
-    cookieY = random(windowHeight - cookie.height * cookieScale);
-  }
+    if (mouseX > cookieX && mouseX < cookieX + cookie.width * cookieScale && mouseY > cookieY && mouseY < cookieY + cookie.height * cookieScale){
+      score += 1;
+      firstClickDone = "done";
+      clickSound.play();
+      cookieX = random(windowWidth - cookie.width * cookieScale);
+      cookieY = random(windowHeight - cookie.height * cookieScale);
+    }
   }
 }
