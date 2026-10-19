@@ -5,15 +5,19 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let x, y, w, h, speed;
+let x, y, w, h, speed, shared;
 
-function setup() {
+
+async function setup() {
   createCanvas(windowWidth, windowHeight);
+  let shared;
+  await partyConnect("wss://demoserver.p5party.org", "array-objects");
+  shared = await partyLoadShared("shared", { x: 100, y: 100 });
   noStroke();
   rectMode(CENTER);
   x = width/2;
   y = height/2;
-  w = 50;
+  w = 50; 
   h = 100;
   speed = 3;
 }
