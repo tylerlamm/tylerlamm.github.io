@@ -6,6 +6,9 @@
 // - describe what you did to take this project "above and beyond"
 
 let x, y, w, h, speed, shared;
+let time = 0;
+let deltatime = 0.01;
+const TIME_OFFSET = 100000;
 
 
 async function setup() {
@@ -19,13 +22,19 @@ async function setup() {
   y = height/2;
   w = 50; 
   h = 100;
-  speed = 3;
+  speed = 10;
 }
 
 function draw() {
   background(220);
   moveCharacter();
   showCharacter();
+  let x = noise(time) * width;
+  let y = noise(time + TIME_OFFSET) * height;
+  fill("black");
+  circle(x, y, 50);
+
+  time += deltatime;
 }
 
 function showCharacter() {
