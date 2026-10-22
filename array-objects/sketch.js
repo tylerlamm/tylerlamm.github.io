@@ -5,54 +5,54 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let x, y, w, h, speed, shared;
-let time = 0;
-let deltatime = 0.01;
-const TIME_OFFSET = 100000;
+//pseudo code:
+//1. each hole is an object and put all the holes into an array
+//2. pick randomly from that array then push out a mole
+//3. if mole is clicked within the time limit, go back down. else go make it go back down itself
+//4. game timer where at the end of the time, it shows a score 
 
+let gameState = "notPlaying";
+let startBackground, playBackground, moleHole, clickToPlay, title;
 
 async function setup() {
-  createCanvas(windowWidth, windowHeight);
-  let shared;
-  await partyConnect("wss://demoserver.p5party.org", "array-objects");
-  shared = await partyLoadShared("shared", { x: 100, y: 100 });
-  noStroke();
-  rectMode(CENTER);
-  x = width/2;
-  y = height/2;
-  w = 50; 
-  h = 100;
-  speed = 10;
+  createCanvas(1000, 750);
+  startBackground = await loadImage('images/start_bg.png');
+  playBackground = await loadImage('images/whackamole.png');
+  moleHole = await loadImage('images/mole_hole.png');
+  clickToPlay = await loadImage('images/click_to_play.png');
+  title = await loadImage('images/title.png');
 }
 
 function draw() {
-  background(220);
-  moveCharacter();
-  showCharacter();
-  let x = noise(time) * width;
-  let y = noise(time + TIME_OFFSET) * height;
-  fill("black");
-  circle(x, y, 50);
-
-  time += deltatime;
+  if (gameState === "notPlaying") {
+    startScreen();
+  }
+  else if (gameState === "playing") {
+    playScreen();
+  }
 }
 
-function showCharacter() {
-  fill("blue");
-  rect(x, y, w, h);
+function startScreen() {
+  background(startBackground);
+  push();
+  imageMode(CENTER);
+  image(title, 500, 100);
+  image(clickToPlay, 500, 320);
+  image(moleHole, 500, 550);
+  pop();
 }
 
-function moveCharacter() {
-  if (keyIsDown("w") || keyIsDown(UP_ARROW)) {
-    y -= speed;
+function playScreen() {
+  background(playBackground);
+}
+
+function pushMole() {
+  moles = {
   }
-  if (keyIsDown("s") || keyIsDown(DOWN_ARROW)) {
-    y += speed;
-  }
-  if (keyIsDown("d") || keyIsDown(RIGHT_ARROW)) {
-    x += speed;
-  }
-  if (keyIsDown("a") || keyIsDown(LEFT_ARROW)) {  
-    x -= speed;
+}
+
+function mousePressed() {
+  if (gameState === "notPlaying") {
+    gameState = "playing";
   }
 }
