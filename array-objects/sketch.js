@@ -44,10 +44,49 @@ function startScreen() {
 
 function playScreen() {
   background(playBackground);
+  line(0, 0, 520, 630);
 }
 
 function pushMole() {
-  moles = {
+  let hole1 = {
+    moleX: 300,
+    moleY: 370
+  };
+
+  let hole2 = {
+    moleX: 550,
+    moleY: 370
+  };
+
+  let hole3 = {
+    moleX: 150,
+    moleY: 500
+  };
+
+  let hole4 = {
+    moleX: 400,
+    moleY: 500
+  };
+
+  let hole5 = {
+    moleX: 650,
+    moleY: 500
+  };
+  
+  let hole6 = {
+    moleX: 270,
+    moleY: 630
+  };
+
+  let hole7 = {
+    moleX: 520,
+    moleY: 630
+  };
+
+  let holes = [hole1, hole2, hole3, hole4, hole5, hole6, hole7];
+  
+  for (let hole of random(holes)) {
+    
   }
 }
 
