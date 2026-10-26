@@ -12,7 +12,10 @@
 //4. game timer where at the end of the time, it shows a score 
 
 let gameState = "notPlaying";
-let startBackground, playBackground, moleHole, clickToPlay, title;
+let startBackground, playBackground, moleHole, clickToPlay, title, hammer;
+let hammerScale = 0.25;
+let holes = [];
+
 
 async function setup() {
   createCanvas(1000, 750);
@@ -21,6 +24,8 @@ async function setup() {
   moleHole = await loadImage('images/mole_hole.png');
   clickToPlay = await loadImage('images/click_to_play.png');
   title = await loadImage('images/title.png');
+  hammer = await loadImage('images/hammer.png');
+  noCursor(); 
 }
 
 function draw() {
@@ -44,51 +49,28 @@ function startScreen() {
 
 function playScreen() {
   background(playBackground);
-  line(0, 0, 520, 630);
+  push();
+  imageMode(CENTER);
+  image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
+  pop();
 }
 
-function pushMole() {
-  let hole1 = {
-    moleX: 300,
-    moleY: 370
-  };
+function createHoles() {
+  holes.push({moleX: 300, moleY: 370});
+  holes.push({moleX: 550, moleY: 370});
+  holes.push({moleX: 150, moleY: 500});
+  holes.push({moleX: 400, moleY: 500});
+  holes.push({moleX: 650, moleY: 500});
+  holes.push({moleX: 270, moleY: 630});
+  holes.push({moleX: 520, moleY: 630});
+}
 
-  let hole2 = {
-    moleX: 550,
-    moleY: 370
-  };
-
-  let hole3 = {
-    moleX: 150,
-    moleY: 500
-  };
-
-  let hole4 = {
-    moleX: 400,
-    moleY: 500
-  };
-
-  let hole5 = {
-    moleX: 650,
-    moleY: 500
-  };
-  
-  let hole6 = {
-    moleX: 270,
-    moleY: 630
-  };
-
-  let hole7 = {
-    moleX: 520,
-    moleY: 630
-  };
-
-  let holes = [hole1, hole2, hole3, hole4, hole5, hole6, hole7];
-  
-  for (let hole of random(holes)) {
+function pushHoles() {
+  for (let hole of holes) {
     
   }
 }
+
 
 function mousePressed() {
   if (gameState === "notPlaying") {
