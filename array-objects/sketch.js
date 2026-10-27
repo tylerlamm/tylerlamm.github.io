@@ -18,6 +18,7 @@ let moleScale = 0.8;
 let score = 0;
 let nextMoleTime = 0;
 let holes = [];
+let lives = 5;
 
 
 async function setup() {
@@ -38,6 +39,9 @@ function draw() {
   else if (gameState === "playing") {
     playScreen();
   }
+  else if (gameState === "gameOver") {
+    gameOverScreen();
+  }
 }
 
 function startScreen() {
@@ -57,6 +61,21 @@ function playScreen() {
   push();
   imageMode(CENTER);
   image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
+  pop();
+}
+
+function gameOverScreen() {
+  background(playBackground);
+  push();
+  fill(255);
+  stroke(0);
+  strokeWeight(6);
+  textAlign(CENTER);  
+  textSize(70);
+  text("GAME OVER", 500, 300);
+  textSize(40);
+  text("Score: " + score, 500, 370);
+  text("Click to play again", 500, 440);
   pop();
 }
 
@@ -95,7 +114,11 @@ function updateMoles() {
   for (let hole of holes) {
     if (hole.moleUp && millis() - hole.moleUpTime > 750){
       hole.moleUp = false;
-      nextMoleTime = millis() + random(300, 1500);
+      nextMoleTime = millis() + random(500, 1500);
+      lives -= 1;
+      if (lives <= 0) {
+        gameState = "gameOver"
+      }
     }
   }
 }
@@ -116,6 +139,7 @@ function showScore() {
   strokeWeight(4);
   textSize(40);
   text("Score: " + score, 30, 60);
+  text("Lives: " + lives, 800, 60);
 }
 
 function mousePressed() {
@@ -126,9 +150,14 @@ function mousePressed() {
     for (let hole of holes) {
       if (hole.moleUp && dist(mouseX, mouseY, hole.holeX, hole.holeY - 60) < 55) {
         score += 1;
-        moleUp = false;
-        nextMoleTime = millis() + random(300, 1500);
+        hole.moleUp = false;
+        nextMoleTime = millis() + random(500, 1500);
       }
     }
+  }
+  else if (gameState === "gameOver") {
+    score = 0
+    lives = 5;
+    gameState = "playing"
   }
 }
