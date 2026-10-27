@@ -60,11 +60,11 @@ function startScreen() {
 function playScreen() {
   background(playBackground);
   drawHoles();
-  updateMoles()
-  drawMoles()
+  updateMoles();
+  drawMoles();
   showScore();
   push();
-  imageMode(CENTER)
+  imageMode(CENTER);
   image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
   pop();
 }
@@ -102,8 +102,8 @@ function drawHoles() {
 }
 
 function updateMoles() {
-  let anyMoleUp = false
-//check every hole to see if any mole is up
+  let anyMoleUp = false;
+  //check every hole to see if any mole is up
   for (let hole of holes) {
     if (hole.moleUp) {
       anyMoleUp = true;
@@ -115,7 +115,7 @@ function updateMoles() {
     pickedHole.moleUp = true;
     pickedHole.moleUpTime = millis();
   }
-//if a mole has been up for over a second, push it down
+  //if a mole has been up for over a second, push it down
   for (let hole of holes) {
     if (hole.moleUp && millis() - hole.moleUpTime > moleTime){
       hole.moleUp = false;
