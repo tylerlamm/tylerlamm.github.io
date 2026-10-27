@@ -10,7 +10,7 @@
 
 let gameState = "notPlaying";
 let startBackground, playBackground, moleHole, clickToPlay, title, hammer, mole;
-let hammerScale = 0.25;
+let hammerScale = 0.5;
 let moleScale = 0.8;
 let score = 0;
 let nextMoleTime = 0;
@@ -64,6 +64,7 @@ function playScreen() {
   drawMoles()
   showScore();
   push();
+  imageMode(CENTER)
   image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
   pop();
 }
