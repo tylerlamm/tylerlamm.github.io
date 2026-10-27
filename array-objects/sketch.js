@@ -3,13 +3,10 @@
 // October 7, 2026
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
-//pseudo code:
-//1. each hole is an object and put all the holes into an array
-//2. pick randomly from that array then push out a mole
-//3. if mole is clicked within the time limit, go back down. else go make it go back down itself
-//4. game timer where at the end of the time, it shows a score 
+// - Change the cursor into a hammer
+// - Moles stay up for a random time and wait in between. The moles are random, using `millis` stored in each hole object
+// - Played with text
+// - 2 second get ready delay at the start of the game
 
 let gameState = "notPlaying";
 let startBackground, playBackground, moleHole, clickToPlay, title, hammer, mole;
@@ -18,8 +15,8 @@ let moleScale = 0.8;
 let score = 0;
 let nextMoleTime = 0;
 let holes = [];
-let lives = 5;
-
+let lives = 3;
+let moleTime = 750;
 
 async function setup() {
   createCanvas(1000, 750);
@@ -28,6 +25,8 @@ async function setup() {
   moleHole = await loadImage('images/mole_hole.png');
   hammer = await loadImage('images/hammer.png');
   mole = await loadImage('images/mole.png');
+  bounceHouse = await loadFont('fonts/bounce-house-regular.otf');
+  pixelGame = await loadFont('fonts/pixelgame.otf');
   noCursor();
   createHoles();
 }
@@ -49,6 +48,12 @@ function startScreen() {
   push();
   imageMode(CENTER);
   image(moleHole, 500, 550);
+  textAlign(CENTER);
+  textFont(bounceHouse);
+  textSize(60);
+  text("Click to play!", 500, 400);
+  textSize(100);
+  text("WHACK-A-MOLE", 500, 200);
   pop();
 }
 
@@ -59,7 +64,6 @@ function playScreen() {
   drawMoles()
   showScore();
   push();
-  imageMode(CENTER);
   image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
   pop();
 }
@@ -112,12 +116,12 @@ function updateMoles() {
   }
 //if a mole has been up for over a second, push it down
   for (let hole of holes) {
-    if (hole.moleUp && millis() - hole.moleUpTime > 750){
+    if (hole.moleUp && millis() - hole.moleUpTime > moleTime){
       hole.moleUp = false;
       nextMoleTime = millis() + random(500, 1500);
       lives -= 1;
       if (lives <= 0) {
-        gameState = "gameOver"
+        gameState = "gameOver";
       }
     }
   }
@@ -137,7 +141,8 @@ function showScore() {
   fill(255);
   stroke(0);
   strokeWeight(4);
-  textSize(40);
+  textSize(60);
+  textFont(pixelGame);
   text("Score: " + score, 30, 60);
   text("Lives: " + lives, 800, 60);
 }
@@ -145,6 +150,7 @@ function showScore() {
 function mousePressed() {
   if (gameState === "notPlaying") {
     gameState = "playing";
+    nextMoleTime = millis() + 2000;
   }
   else if (gameState === "playing") {
     for (let hole of holes) {
@@ -152,12 +158,15 @@ function mousePressed() {
         score += 1;
         hole.moleUp = false;
         nextMoleTime = millis() + random(500, 1500);
+        moleTime = max(moleTime - 20, 350);
       }
     }
   }
   else if (gameState === "gameOver") {
-    score = 0
-    lives = 5;
-    gameState = "playing"
+    score = 0;
+    lives = 3;
+    moleTime = 750;
+    gameState = "playing";
+    nextMoleTime = millis() + 2000;
   }
 }
