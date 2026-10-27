@@ -4,12 +4,12 @@
 //
 // Extra for Experts:
 // - Change the cursor into a hammer
-// - Moles stay up for a random time and wait in between. The moles are random, using `millis` stored in each hole object
+// - Moles stay up for a random time and wait in between. The moles are random using millis
 // - Played with text
 // - 2 second get ready delay at the start of the game
 
 let gameState = "notPlaying";
-let startBackground, playBackground, moleHole, clickToPlay, title, hammer, mole;
+let startBackground, playBackground, moleHole, clickToPlay, title, hammer, mole, bounceHouse, pixelGame;
 let hammerScale = 0.5;
 let moleScale = 0.8;
 let score = 0;
