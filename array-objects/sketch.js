@@ -52,11 +52,12 @@ function playScreen() {
   background(playBackground);
   drawHoles();
   updateMoles()
+  drawMoles()
+  showScore();
   push();
   imageMode(CENTER);
   image(hammer, mouseX, mouseY, hammer.width * hammerScale, hammer.height * hammerScale);
   pop();
-  drawHoles();
 }
 
 function createHoles() {
@@ -84,10 +85,50 @@ function updateMoles() {
       anyMoleUp = true;
     }
   }
+  //if no mole is up, pick random hole to put a mole in
+  if (!anyMoleUp && millis() > nextMoleTime) {
+    let pickedHole = random(holes);
+    pickedHole.moleUp = true;
+    pickedHole.moleUpTime = millis();
+  }
+//if a mole has been up for over a second, push it down
+  for (let hole of holes) {
+    if (hole.moleUp && millis() - hole.moleUpTime > 750){
+      hole.moleUp = false;
+      nextMoleTime = millis() + random(300, 1500);
+    }
+  }
+}
+
+function drawMoles() {
+  for (let hole of holes) {
+    if (hole.moleUp) {
+      let moleW = mole.width * moleScale;
+      let moleH = mole.height * moleScale;
+      image(mole, hole.holeX - moleW / 2, hole.holeY - moleH, moleW, moleH);
+    }
+  }
+}
+
+function showScore() {
+  fill(255);
+  stroke(0);
+  strokeWeight(4);
+  textSize(40);
+  text("Score: " + score, 30, 60);
 }
 
 function mousePressed() {
   if (gameState === "notPlaying") {
     gameState = "playing";
+  }
+  else if (gameState === "playing") {
+    for (let hole of holes) {
+      if (hole.moleUp && dist(mouseX, mouseY, hole.holeX, hole.holeY - 60) < 55) {
+        score += 1;
+        moleUp = false;
+        nextMoleTime = millis() + random(300, 1500);
+      }
+    }
   }
 }
