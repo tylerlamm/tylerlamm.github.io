@@ -13,6 +13,7 @@
 - [Randomized Art](art)
 - [Images and Sound fx](loading-assets)
 - [Grid Demo](grid)
+- [Rectangular Grid](rect-grid)
 
 ## Projects
 - [Interactive Scene](scene)
