@@ -6,9 +6,11 @@ let rows;
 let cols;
 let grid;
 let autoPlayIsOn = false;
+let gosper;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
+  gosper = await loadJSON('gospergun.json');
   rows = Math.floor(height/CELL_SIZE);
   cols = Math.floor(width/CELL_SIZE);
   grid = generateRandomGrid(cols, rows);
@@ -76,6 +78,9 @@ function keyPressed() {
   }
   else if (key === 'a') {
     autoPlayIsOn = !autoPlayIsOn;
+  }
+  else if (key === 'g') {
+    grid = gosper;
   }
 }
 
