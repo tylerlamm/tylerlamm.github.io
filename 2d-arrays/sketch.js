@@ -1,0 +1,15 @@
+// 2d Arrays Calculator
+// Tyler Lam
+// November 16, 2026
+//
+// Extra for Experts:
+// - describe what you did to take this project "above and beyond"
+
+
+async function setup() {
+  createCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+  background(220);
+}
