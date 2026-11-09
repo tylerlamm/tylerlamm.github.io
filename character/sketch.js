@@ -13,6 +13,8 @@ let thePlayer = {
   x: 0,
   y: 0
 };
+let grassImg;
+let brickImg;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -21,6 +23,8 @@ async function setup() {
   grid = generateRandomGrid(cols, rows);
   //put player in grid
   grid[thePlayer.y][thePlayer.x] = PLAYER;
+  grassImg = await loadImage("grass.jpg");
+  brickImg = await loadImage("brick.jpg");  
 }
 
 function draw() {
@@ -94,15 +98,15 @@ function displayGrid() {
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       if (grid[y][x] === OPEN_TILE) {
-        fill('white');
+        image(grassImg, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       }
       else if (grid[y][x] === IMPASSIBLE) {
-        fill('black');
+        image(brickImg, x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       }
       else if (grid[y][x] === PLAYER) {
         fill('red');
+        square(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
       }
-      square(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
     }
   }
 }
