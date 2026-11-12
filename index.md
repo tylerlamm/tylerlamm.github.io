@@ -16,7 +16,8 @@
 - [Rectangular Grid](rect-grid)
 - [Game of Life](life)
 - [Character in Grid](character)
-- [Set Time out](set-timeout)
+- [setTimeout](set-timeout)
+- [setInterval](set-interval)
 
 ## Projects
 - [Interactive Scene](scene)

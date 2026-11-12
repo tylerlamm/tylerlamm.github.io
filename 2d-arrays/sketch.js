@@ -1,4 +1,4 @@
-// 2d Arrays Calculator
+// 2d Arrays Tic Tac Toe
 // Tyler Lam
 // November 16, 2026
 //
