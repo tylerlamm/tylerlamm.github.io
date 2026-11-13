@@ -9,7 +9,7 @@
 // const SQUARE_DIMENSIONS = grid.length;
 
 //if randomizing the grid
-const SQUARE_DIMENSIONS = 10;
+const SQUARE_DIMENSIONS = 30;
 let grid;
 let cellSize;
 
