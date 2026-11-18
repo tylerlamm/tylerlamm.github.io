@@ -5,40 +5,62 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let gameState = notStarted;
-let grid, font, cellSize;
+let gameState = "notPlaying";
+let font;
+let rows, columns, cellSize;
 
 async function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1000, 800);
   jungleFont = await loadFont("jungle.otf");
 }
 
 function draw() {
-  startScreen();
-  drawGameBoard();
+  if (gameState === "notPlaying") {
+    startScreen();
+  }
+  else if (gameState === "Playing") {
+    drawGameBoard();
+  }
 }
 
 function startScreen() {
-  background(0, 150, 120);
+  background("gray")
   textAlign(CENTER, CENTER);
   textSize(70);
   textFont(jungleFont);
-  text("2 Player Game: Press 2", width/2, height*0.25);
-  text("3 Player Game: Press 3", width/2, height/2);
-  text("4 Player Game: Press 4", width/2, height*0.75);
+  text("2 Player Game: Press 2", 450, 700*0.25);
+  text("3 Player Game: Press 3", 450, 700/2);
+  text("4 Player Game: Press 4", 450, 700*0.75);
 }
 
 function drawGameBoard() {
-  let gameBoardArray= [];
-  for (let y = 0; y < rows; y++) {
-    for (let x = 0; x < cols; x++) {
-      if (keyPressed === '2') {
-
-      }
-      else if (grid[y][x] === 1) {
-        fill('black');
-      }
-      square(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE);
+  background("gray")
+  for (let i=0;i<rows;i++) {
+    for (let j=0;j<columns;j++) {
+      fill("white")
+      ellipse(cellSize/2 + i*cellSize, cellSize/2 + j*cellSize, cellSize , cellSize);
     }
   }
+}
+
+function keyPressed() {
+  if (key === "2") {
+    rows = 7;
+    columns = 6;
+    cellSize = 132;
+    gameState = "Playing";
+  }
+  else if (key === "3") {
+    rows = 10;
+    columns = 8;
+    cellSize = 100;
+    gameState = "Playing";
+  }
+  else if (key === "4") {
+    rows = 12;
+    columns = 10;
+    cellSize = 80
+    gameState = "Playing";
+  }
+
 }
