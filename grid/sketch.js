@@ -18,7 +18,7 @@ async function setup() {
   if (width < height) {
     cellSize = width / SQUARE_DIMENSIONS;
   }
-  else {
+  else {    
     cellSize = height / SQUARE_DIMENSIONS;
   }
   grid = randomizeGrid(SQUARE_DIMENSIONS, SQUARE_DIMENSIONS);

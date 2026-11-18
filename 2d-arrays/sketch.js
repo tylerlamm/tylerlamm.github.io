@@ -8,6 +8,7 @@
 let gameState = "notPlaying";
 let font;
 let rows, columns, cellSize;
+let canvasWidth, canvasHeight;
 
 async function setup() {
   createCanvas(1000, 800);
@@ -24,7 +25,7 @@ function draw() {
 }
 
 function startScreen() {
-  background("gray")
+  background("gray");
   textAlign(CENTER, CENTER);
   textSize(70);
   textFont(jungleFont);
@@ -34,20 +35,38 @@ function startScreen() {
 }
 
 function drawGameBoard() {
-  background("gray")
+  background("black");
   for (let i=0;i<rows;i++) {
     for (let j=0;j<columns;j++) {
-      fill("white")
+      fill("white");
       ellipse(cellSize/2 + i*cellSize, cellSize/2 + j*cellSize, cellSize , cellSize);
     }
   }
 }
 
+function dropChip() {
+  // let emptyGrid = [];
+  // for (let y = 0; y < columns; y++) {
+  //   emptyGrid.push([]);
+  //   for (let x = 0; x < rows; x++) {
+  //     emptyGrid[y].push(0);
+  //   }
+  // }
+  // return emptyGrid;
+}
+
+function mousePressed() {
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
+  console.log(x, y);
+  
+}
+
 function keyPressed() {
-  if (key === "2") {
+  if (key === "2") { 
     rows = 7;
     columns = 6;
-    cellSize = 132;
+    cellSize = 130;
     gameState = "Playing";
   }
   else if (key === "3") {
@@ -59,7 +78,7 @@ function keyPressed() {
   else if (key === "4") {
     rows = 12;
     columns = 10;
-    cellSize = 80
+    cellSize = 80;
     gameState = "Playing";
   }
 
