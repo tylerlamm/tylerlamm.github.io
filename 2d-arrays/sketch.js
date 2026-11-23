@@ -41,6 +41,7 @@ function startScreen() {
 
 function createBoard() {
   board = [];
+  // create each row and fill them with 0
   for (let r = 0; r < rows; r++) {
     let newRow = [];
     for (let c = 0; c < columns; c++) {
@@ -58,6 +59,7 @@ function drawGameBoard() {
       ellipse(cellSize/2 + c*cellSize, topBar + cellSize/2 + r*cellSize, cellSize , cellSize);
     }
   }
+  drawPreview()
   fill(playerColors[currentPlayer]);
   stroke("black");
   strokeWeight(4);
@@ -73,33 +75,57 @@ function drawGameBoard() {
 
 function checkWin(player) {
   // 4 ways a player can win: horizonatal, vertical, diagonal right, diagonal left
-  let directions = [[0, 1], [1, 0], [1, 1], [1, -1]];
-
+  // horizontal going right
   for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < columns; c++) {
-      if (board[r][c] !== player) {
-        continue;
+    for (let c = 0; c < columns - 3; c++) {
+      if (board[r][c] === player && board[r][c + 1] === player && board[r][c + 2] === player && board[r][c + 3] === player) {
+        return true;
       }
-      for (let d of directions) {
-        let dr = d[0];
-        let dc = d[1];
-        // where the 4th piece would be
-        let endR = r + 3 * dr;
-        let endC = c + 3 * dc;
-        // skip if the line would go off board
-        if (endR < 0 || endR >= rows || endC < 0 || endC >= columns) {
-          continue;
-        }
-        // check next 3 spots in this direction
-        if (board[r + dr][c + dc] === player &&
-            board[r + 2 * dr][c + 2 * dc] === player &&
-            board[r + 3 * dr][c + 3 * dc] === player) {
-          return true;
+    }
+  }
+  // vertical going down
+  for (let r = 0; r < rows - 3; r++) {
+    for (let c = 0; c < columns; c++) {
+      if (board[r][c] === player && board[r + 1][c] === player && board[r + 2][c] === player && board[r + 3][c] === player) {
+        return true;
+      }
+    }
+  }
+  // diagonal down and right
+  for (let r = 0; r < rows - 3; r++) {
+    for (let c = 0; c < columns - 3; c++) {
+      if (board[r][c] === player && board[r + 1][c + 1] === player && board[r + 2][c + 2] === player && board[r + 3][c + 3] === player) {
+        return true;
+      }
+    }
+  }
+  // diagonal down and left
+  for (let r = 0; r < rows - 3; r++) {
+    for (let c = 3; c < columns; c++) {
+      if (board[r][c] === player && board[r + 1][c - 1] === player && board[r + 2][c - 2] === player && board[r + 3][c - 3] === player) {
+        return true;
+      }
+    }
+  }
+  // no 4 in a row
+  return false;
+}
+
+function drawPreview() {
+  if (gameState === "Playing") {
+    // which colunm the mouse is at
+    let c = floor(mouseX / cellSize);
+    if (c >= 0 && c < columns) {
+      // start at bottom and move up till theres an empty spot
+      for (let r = rows - 1; r >= 0; r--) {
+        if (board[r][c] === 0) {
+          fill(playerColors[currentPlayer]);
+          ellipse(cellSize/2 + c*cellSize, topBar + cellSize/2 + r*cellSize, cellSize/2, cellSize/2);
+          break
         }
       }
     }
   }
-  return false;
 }
 
 function keyPressed() {
@@ -124,19 +150,15 @@ function keyPressed() {
     cellSize = 80
     startGame();
   }
-
 }
 
 function mousePressed() {
   if (gameState === "Playing") {
-    // which column was clicked
+    // which column was clicked and ignore outside clicks
     let c = floor(mouseX / cellSize);
-
-    // ignore click outside the board
     if (c < 0 || c >= columns) {
       return;
     }
-
     // start at bottom row and move up until theres an empty spot
     for (let r = rows - 1; r >= 0; r--) {
       if (board[r][c] === 0) {
